@@ -57,10 +57,6 @@ End Sub
 Sub SeparateTableExperimentalEducation()
     Sheets.Add(After:=Worksheets("實驗教育")).Name = "海外平台"
     Sheets("實驗教育").Select
-    Range("J14:K14").Select
-    Selection.Cut
-    Range("J15").Select
-    ActiveSheet.Paste
     Rows("14:18").Select
     Selection.Cut
     Sheets("海外平台").Select
@@ -89,6 +85,5 @@ Sub CheckNFields()
         MsgBox "格式化成功。"
     End If
 End Sub
-
 
 
