@@ -2,6 +2,7 @@ Sub main20200730()
     Call CopyPasteAllToValue
     Call SeparateTableExperimentalEducation
     Call AddFailingFields
+    Call AddSystemErrorField
     Call CheckNFields
 End Sub
 
@@ -68,6 +69,22 @@ Sub SeparateTableExperimentalEducation()
     Selection.Delete Shift:=xlUp
 End Sub
 
+Sub AddSystemErrorField()
+    Dim lastColumnNumber As Long
+    
+    Dim worksheetsArray As Variant
+    worksheetsArray = Array("公版", "北科大", "臺北市", "高雄市", "新北市", "其他", "實驗教育", "海外平台")
+    Dim wrongWorksheets As String
+    wrongWorksheets = ""
+    For Each currentWorksheet In worksheetsArray
+        Sheets(currentWorksheet).Select
+	lastColumnNumber = ActiveSheet.UsedRange.Columns.Count
+        If Cells(1, lastColumnNumber).Value <> "系統故障" Then
+        	Cells(1, lastColumnNumber + 1).Value = "系統故障"
+   	End If
+    Next currentWorksheet
+End Sub
+
 Sub CheckNFields()
     Dim worksheetsArray As Variant
     worksheetsArray = Array("公版", "北科大", "臺北市", "高雄市", "新北市", "其他", "實驗教育", "海外平台")
@@ -75,7 +92,7 @@ Sub CheckNFields()
     wrongWorksheets = ""
     For Each currentWorksheet In worksheetsArray
         Sheets(currentWorksheet).Select
-        If ActiveSheet.UsedRange.Columns.Count <> 14 Then
+        If ActiveSheet.UsedRange.Columns.Count <> 15 Then
             wrongWorksheets = wrongWorksheets + " '" + currentWorksheet + "', "
         End If
     Next currentWorksheet
@@ -85,5 +102,3 @@ Sub CheckNFields()
         MsgBox "格式化成功。"
     End If
 End Sub
-
-
